@@ -3,6 +3,6 @@
     "description": "Some enhancements for symfony forms : Collections and javascripts, selects, dependants fields",
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "symfony/framework-bundle": "^2.7 || ^3.0",
+        "symfony/framework-bundle": "^2.7 || ^3.0"
 	}
 }
