@@ -1,0 +1,5 @@
+services:
+    kryptomania_extra_form.collection_type_extension:
+        class: Kryptomania\ExtraFormBundle\Form\Extension\CollectionTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\CollectionType }
