@@ -1,8 +1,15 @@
 {
     "name": "kryptomania/extra-form-bundle",
     "description": "Some enhancements for symfony forms : Collections and javascripts, selects, dependants fields",
+    "type": "symfony-bundle",
+    "keywords": ["collection", "collectionType", "select", "form", "fields", "entity", "entityType"],
+    "homepage": "https://github.com/Kryptomania/ExtraFormBundle",
+	"license": "MIT",
     "require": {
         "php": "^5.5.9 || ^7.0",
         "symfony/framework-bundle": "^2.7 || ^3.0"
+	},
+    "autoload": {
+        "psr-4": { "Kryptomania\\ExtraFormBundle\\": "" }
 	}
 }
