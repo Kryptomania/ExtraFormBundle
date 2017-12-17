@@ -3,11 +3,15 @@
 
 (function( $ )
 {
-    
+    var showDebug = false;
     var methods = {
         init : function( options ) { 
             // Create some defaults, extending them with any options that were provided
             settings = $.extend( {}, $.fn.masterInput.defaults, options );
+            if (settings.debug === true)
+            {
+                showDebug = true;
+            }
 
             return this.each(function()
             {
@@ -23,17 +27,21 @@
                         $this.masterInput('refresh');
                     };
 
-                    $this.on({"change": eventHandler});
+                    $this.on({"change": eventHandler}); 
 
                     // store data
                     $this.data('masterInput', 
                     {
                         settings : settings,
                         eventHandler: eventHandler,
+                        ajaxCounter: {
+                            totalRequests: 0,
+                            completedRequests: 0,
+                        }
                     });
 
 
-                    if (settings.triggerChangeOnStart == true)
+                    if (settings.triggerChangeOnStart === true)
                     {
                         $this.trigger('change');
                     }
@@ -61,9 +69,14 @@
                     return true;
                 }
                 
+                $this.trigger('masterInput.refreshInit', $this);
                 var fields    = getFields(data, $this, context),
                     previousRequests = {};
                 ;
+
+                // Ajout de + 1 pour prendre en compte l'appel à la fin du forEach
+                data.ajaxCounter.totalRequests = fields.length +1;
+                data.ajaxCounter.completedRequests = 0;
 
                 // les requêtes Ajax sont envoyées seulement s'il y a des valeurs selectionnées si acceptEmptyData == true
                 // rafraichit les champs concernés
@@ -107,10 +120,6 @@
                             var ajaxDataToString = JSON.stringify(ajaxData);
 
                             $.each(previousRequests, function(key, req){
-                                console.log(ajaxUrl + ' === ' + req.url);
-                                console.log(ajaxDataToString + ' === ' + req.data);
-                                
-                                
                                 if (ajaxUrl === req.url && ajaxDataToString === req.data)
                                 {
                                     hasPreviousRequest = key;
@@ -131,6 +140,7 @@
                                 {
                                     previousRequests[hasPreviousRequest]['fields'].push(fieldParams);
                                 }
+                                isRefreshCompleted($this);
                             }
                             else
                             {
@@ -153,6 +163,7 @@
                                             handleAjaxResponse(response, xhr, storedField, $this);
                                         });
                                         handleAjaxResponse(response, xhr, fieldParams, $this);
+                                        isRefreshCompleted($this);
                                     },
                                     error: function(e){
                                         $this.trigger('masterInput.ajaxError', e, ajaxData, ajaxUrl, fieldParams);
@@ -173,7 +184,12 @@
                             {
                                 fieldParams.item.trigger('change');
                             }
+                            
+                            isRefreshCompleted($this);
                         }
+                    }
+                    else{
+                        isRefreshCompleted($this);
                     }
 
                     // =====================================================
@@ -327,6 +343,9 @@
                         }
                     }
                 });
+                
+                // Au cas où il n'y a pas de requetes Ajax, cette instruction permet de déclencher le refreshCompleted
+                isRefreshCompleted($this);
             });
         },
 
@@ -341,9 +360,18 @@
         }, // fin destroy
 
     };
+    
+    function isRefreshCompleted(element){
+        var data = element.data('masterInput');
+        data.ajaxCounter.completedRequests++;
+
+        if (data.ajaxCounter.completedRequests >= data.ajaxCounter.totalRequests){
+            element.trigger('masterInput.refreshCompleted');
+        }
+    }
 
     function debug( objName, objValue, objFunction ) {
-        if ( window.console && window.console.log ) {
+        if ( window.console && window.console.log && true === showDebug ) {
             window.console.log( "Function: " + objFunction + ", Content of var  " + objName + " :");
             window.console.log(objValue);
         }
@@ -614,6 +642,7 @@
         masterValueName       : 'id', 
         triggerChangeOnStart  : true,
         commonAncestor        : false, // selector or jQuery Element
+        debug                 : false,
 
         // Pour Rafraichir le champ
         refresh               : false, // Rafraichir via Ajax
