@@ -513,15 +513,13 @@
         
         var oldValue = clearField(fieldParams);
         // On insère les données reçues (Json ou HTML)
-        if (ct.indexOf('html') > -1) 
+        if (fieldParams.responseAsValue == true)
         {
-            if (fieldParams.responseAsValue == true)
-            {
-                field.val(response);
-            }
-            else{
-                field.html(response);
-            }
+            field.val(response);
+        }
+        else if (ct.indexOf('html') > -1) 
+        {
+            field.html(response);
         }
         else if (ct.indexOf('json') > -1)
         {
@@ -556,7 +554,7 @@
         }
 
         // remet l'ancienne valeur si possible
-        if ((ct.indexOf('html') > -1) && fieldParams.responseAsValue)
+        if (fieldParams.responseAsValue)
         {
             // Dans ce cas, le champ a déjà une valeur
         }
