@@ -510,8 +510,8 @@
         // Comment vider le champ de façon sûre
         var field = fieldParams.item;
         var ct = xhr.getResponseHeader("content-type") || ""; 
+        var oldValue;
         
-        var oldValue = clearField(fieldParams);
         // On insère les données reçues (Json ou HTML)
         if (fieldParams.responseAsValue == true)
         {
@@ -523,6 +523,7 @@
         }
         else if (ct.indexOf('json') > -1)
         {
+            oldValue = clearField(fieldParams);
             $.each(response, function(key, val) {
                 var option = $('<option></option>');
                 if (typeof val == 'object' && val !== null)
