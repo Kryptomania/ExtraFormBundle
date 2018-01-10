@@ -96,18 +96,16 @@
 				{% set fieldNum = fieldNum + 1 %}
 			{% endfor %}
 			
-			{% if allow_delete %}
-				<div class="form-group">
-					{% if  (columnCssClass|length > 0) and (true == singleFieldLabel) %}
-						<label class="control-label">&nbsp;</label>
-					{% endif %}
-					<div class="{% if entryActionsCssClass is defined %}{{ entryActionsCssClass }}{% else %} col-xs-2 col-xs-offset-5{% endif %}">
-						<a class="remove-form-row btn btn-danger" title="{% trans %}delete{% endtrans %}">
-							<i class="fa fa-trash-o"></i>       
-						</a>
-					</div>
-				</div>
-			{% endif %}
+            {% if allow_delete %}
+                <div class="sub-form-row-actions {{ entryActionsCssClass }}">
+                    {% if  (columnCssClass|length > 0) and (true == singleFieldLabel) %}
+                        <label class="sub-form-row-label label-for-actions control-label">&nbsp;</label>
+                    {% endif %}
+                    <a class="remove-form-row btn btn-danger" title="{% trans %}delete{% endtrans %}">
+                        <i class="fa fa-trash-o"></i>       
+                    </a>
+                </div>
+            {% endif %}
 			<div class="clearfix"></div>
 		</div>
 	{% endspaceless %}
