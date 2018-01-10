@@ -35,7 +35,7 @@ class CollectionTypeExtension extends AbstractTypeExtension
 			'single_field_label'       => false,
 			'single_field_label_xs'    => true,
 			'entry_css_class'          => 'row',
-			'entry_actions_css_class'  => 'form-group text-right col-xs-12',
+			'entry_actions_css_class'  => 'text-right',
 			'column_css_class'         => array(),
 		));
 
@@ -65,36 +65,35 @@ class CollectionTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-		$attr = $options['attr'];
-
-		
-		// Columns css class 
-		$columnCssClass = $options['column_css_class'];
-		if (isset($attr['classes']) && is_array($attr['classes']) )
-		{
-			@trigger_error('Using CollectionType with key \'classes\' in property \'attr\' is deprecated and will be removed in 2.0 Use \'column_css_class\' attribute instead.', E_USER_DEPRECATED);
-			$columnCssClass = $attr['classes'];
-			unset($options['attr']['classes']);
-		}
-
-		$view->vars['columnCssClass'] = $columnCssClass;
+        $attr = $options['attr'];
 
 
-		// Colums css class 
-		$entryActionsCssClass = $options['entry_actions_css_class'];
-		if (isset($attr['delete_class']))
-		{
-			@trigger_error('Using CollectionType with key \'delete_class\' in property \'attr\' is deprecated and will be removed in 2.0 Use \'entry_actions_css_class\' attribute instead.', E_USER_DEPRECATED);
-			$entryActionsCssClass = $attr['delete_class'];
-		}
-		$view->vars['entryActionsCssClass'] = $entryActionsCssClass;
+        // Columns css class
+        $columnCssClass = $options['column_css_class'];
+        if (isset($attr['classes']) && is_array($attr['classes'])) {
+            @trigger_error('Using CollectionType with key \'classes\' in property \'attr\' is deprecated and will be removed in 2.0 Use \'column_css_class\' attribute instead.', E_USER_DEPRECATED);
+            $columnCssClass = $attr['classes'];
+            unset($options['attr']['classes']);
+        }
 
+        // Colums css class
+        $entryActionsCssClass = $options['entry_actions_css_class'];
+        if (isset($attr['delete_class'])) {
+            @trigger_error('Using CollectionType with key \'delete_class\' in property \'attr\' is deprecated and will be removed in 2.0 Use \'entry_actions_css_class\' attribute instead.', E_USER_DEPRECATED);
+            $entryActionsCssClass = $attr['delete_class'];
+        }
 
-		// Other values
-		$view->vars['columnHeaderLabel']   = $options['column_header_label'];
-		$view->vars['singleFieldLabel']    = $options['single_field_label'];
-		$view->vars['singleFieldLabelXs']  = $options['single_field_label_xs'];
-		$view->vars['entryCssClass']       = $options['entry_css_class'];
+        if (count($columnCssClass) == 0 && $options['entry_css_class'] === 'row') {
+            $options['entry_css_class'] = '';
+        }
+
+        // values sended to form view
+        $view->vars['entryActionsCssClass'] = $entryActionsCssClass;
+        $view->vars['columnCssClass'] = $columnCssClass;
+        $view->vars['columnHeaderLabel'] = $options['column_header_label'];
+        $view->vars['singleFieldLabel'] = $options['single_field_label'];
+        $view->vars['singleFieldLabelXs'] = $options['single_field_label_xs'];
+        $view->vars['entryCssClass'] = $options['entry_css_class'];
     }
 
 }
