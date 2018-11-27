@@ -31,12 +31,13 @@ class CollectionTypeExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-			'column_header_label'      => true,
-			'single_field_label'       => false,
-			'single_field_label_xs'    => true,
-			'entry_css_class'          => 'row',
-			'entry_actions_css_class'  => 'text-right',
-			'column_css_class'         => array(),
+            'column_header_label'       => true,
+            'single_field_label'        => false,
+            'collection_list_css_class' => '',
+            'single_field_label_xs'     => true,
+            'entry_css_class'           => 'row',
+            'entry_actions_css_class'   => 'text-right',
+            'column_css_class'          => array(),
 		));
 
 		// Optional
@@ -48,6 +49,7 @@ class CollectionTypeExtension extends AbstractTypeExtension
 		$resolver->setAllowedTypes('column_header_label', 'bool');
 		$resolver->setAllowedTypes('single_field_label', 'bool');
 		$resolver->setAllowedTypes('single_field_label_xs', 'bool');
+        $resolver->setAllowedTypes('collection_list_css_class', 'string');
 		$resolver->setAllowedTypes('entry_css_class', 'string');
 		$resolver->setAllowedTypes('entry_actions_css_class', 'string');
 		$resolver->setAllowedTypes('column_css_class', 'array');
@@ -88,12 +90,13 @@ class CollectionTypeExtension extends AbstractTypeExtension
         }
 
         // values sended to form view
-        $view->vars['entryActionsCssClass'] = $entryActionsCssClass;
-        $view->vars['columnCssClass'] = $columnCssClass;
-        $view->vars['columnHeaderLabel'] = $options['column_header_label'];
-        $view->vars['singleFieldLabel'] = $options['single_field_label'];
-        $view->vars['singleFieldLabelXs'] = $options['single_field_label_xs'];
-        $view->vars['entryCssClass'] = $options['entry_css_class'];
+        $view->vars['entryActionsCssClass']   = $entryActionsCssClass;
+        $view->vars['columnCssClass']         = $columnCssClass;
+        $view->vars['collectionListCssClass'] = $options['collection_list_css_class'];
+        $view->vars['columnHeaderLabel']      = $options['column_header_label'];
+        $view->vars['singleFieldLabel']       = $options['single_field_label'];
+        $view->vars['singleFieldLabelXs']     = $options['single_field_label_xs'];
+        $view->vars['entryCssClass']          = $options['entry_css_class'];
     }
 
 }
