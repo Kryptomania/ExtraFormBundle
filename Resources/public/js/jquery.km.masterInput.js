@@ -97,9 +97,17 @@
                                 ajaxData[fieldParams.masterValueName] = $this.val();
                             }
 
-                            $.each(fieldParams.requestParams, function(key, val){
-                                ajaxData[key] = val;
+                            if (fieldParams.requestParams instanceof Function){
+                                requestParams = fieldParams.requestParams();
+                                debug("requestParams", requestParams, 'refresh');
+                            }else{
+                                requestParams = fieldParams.requestParams
+                            }
+
+                            $.each(requestParams, function(key, val){
+                                ajaxData[key] = val; 
                             });
+
 
                             var ajaxUrl    = fieldParams.ajaxUrl;
                             var ajaxMethod = fieldParams.ajaxMethod;
