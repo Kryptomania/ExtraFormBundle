@@ -1,112 +1,112 @@
 
 {% block collection_widget %}
-	{% spaceless %}
+    {% spaceless %}
 		<div class="collection">
-			{% if attr.classes is defined and attr.classes is iterable %}
-				{% set attr = attr|merge({'classes': '' }) %}
-			{% endif %}
+            {% if attr.classes is defined and attr.classes is iterable %}
+                {% set attr = attr|merge({'classes': '' }) %}
+            {% endif %}
 
-			{% if prototype is defined %}
-				{% set attr = attr|merge({'data-prototype': (block('collection_item_widget')) }) %}
-				{% set attr = attr|merge({'data-prototype-name': prototype.vars.name }) %}
-			{% endif %}
-			
-			
-			{{ form_errors(form) }}
+            {% if prototype is defined %}
+                {% set attr = attr|merge({'data-prototype': (block('collection_item_widget')) }) %}
+                {% set attr = attr|merge({'data-prototype-name': prototype.vars.name }) %}
+            {% endif %}
+
+
+            {{ form_errors(form) }}
 			<div {{ block('widget_container_attributes') }}>
-				<div class="collection-list" data-field="{{ (id)?id:'' }}">
-					{% if columnCssClass|length > 0 and (true == columnHeaderLabel) %}
+				<div class="collection-list {{ collectionListCssClass }}" data-field="{{ (id)?id:'' }}">
+                    {% if columnCssClass|length > 0 and (true == columnHeaderLabel) %}
 						<div class="row hidden-xs form-row-title">
-							{% set fieldNum = 1 %}
-							{% if prototype is defined %}
-								{% for row in prototype %}
+                            {% set fieldNum = 1 %}
+                            {% if prototype is defined %}
+                                {% for row in prototype %}
 									<div class="field_{{ fieldNum }} {% if columnCssClass[fieldNum -1 ] is defined %}{{columnCssClass[fieldNum -1]}}{% endif %}">
-										{{ form_label(row) }}
+                                        {{ form_label(row) }}
 									</div>
-									{% set fieldNum = fieldNum + 1 %}
-								{% endfor %}
-							{% endif %}
+                                    {% set fieldNum = fieldNum + 1 %}
+                                {% endfor %}
+                            {% endif %}
 						</div>
-					{% endif %}
-				{% for rows in form %}
-					<div  class="{{ entryCssClass }} sub-form-row">
-					{% set fieldNum = 1 %}
-					{% for row in rows %}
-						<div class="field_{{ fieldNum }} {% if columnCssClass[fieldNum -1 ] is defined %}{{columnCssClass[fieldNum -1]}}{% endif %}">
-							{% if columnCssClass[fieldNum -1 ] is defined %}
-								{% if (true == singleFieldLabelXs) or (true == singleFieldLabel) %}
-									<div class="sub-form-row-label {% if (false == singleFieldLabel) %} visible-xs {% endif %}">{{ form_label(row) }}</div>
-								{% endif %}
-								<div class="sub-form-row-widget">{{ form_widget(row) }}</div>
-							{% else %}
-								{% if (false == singleFieldLabelXs) and (false == singleFieldLabel) %}
-									{{ form_widget(row) }}
-								{% else %}
-									{{ form_row(row) }}
-								{% endif %}
-							{% endif %}
+                    {% endif %}
+                    {% for rows in form %}
+						<div  class="{{ entryCssClass }} sub-form-row">
+                            {% set fieldNum = 1 %}
+                            {% for row in rows %}
+								<div class="field_{{ fieldNum }} {% if columnCssClass[fieldNum -1 ] is defined %}{{columnCssClass[fieldNum -1]}}{% endif %}">
+                                    {% if columnCssClass[fieldNum -1 ] is defined %}
+                                        {% if (true == singleFieldLabelXs) or (true == singleFieldLabel) %}
+											<div class="sub-form-row-label {% if (false == singleFieldLabel) %} visible-xs {% endif %}">{{ form_label(row) }}</div>
+                                        {% endif %}
+										<div class="sub-form-row-widget">{{ form_widget(row) }}</div>
+                                    {% else %}
+                                        {% if (false == singleFieldLabelXs) and (false == singleFieldLabel) %}
+                                            {{ form_widget(row) }}
+                                        {% else %}
+                                            {{ form_row(row) }}
+                                        {% endif %}
+                                    {% endif %}
+								</div>
+                                {% set fieldNum = fieldNum + 1 %}
+                            {% endfor %}
+                            {% if allow_delete %}
+								<div class="sub-form-row-actions {{ entryActionsCssClass }}">
+                                    {% if  (columnCssClass|length > 0) and (true == singleFieldLabel) %}
+										<label class="sub-form-row-label label-for-actions control-label">&nbsp;</label>
+                                    {% endif %}
+									<a class="remove-form-row btn btn-danger" title="{% trans %}delete{% endtrans %}">
+										<i class="fa fa-trash-o"></i>
+									</a>
+								</div>
+                            {% endif %}
 						</div>
-						{% set fieldNum = fieldNum + 1 %}
-					{% endfor %}
-					{% if allow_delete %}
-						<div class="sub-form-row-actions {{ entryActionsCssClass }}">
-							{% if  (columnCssClass|length > 0) and (true == singleFieldLabel) %}
-								<label class="sub-form-row-label label-for-actions control-label">&nbsp;</label>
-							{% endif %}
-							<a class="remove-form-row btn btn-danger" title="{% trans %}delete{% endtrans %}">
-								<i class="fa fa-trash-o"></i>       
-							</a>
-						</div>
-					{% endif %}
-					</div>
-				{% endfor %}
+                    {% endfor %}
 				</div>
-				
+
 				<div class="clearfix"></div>
-				{% if allow_add %}
-					<a class="button-add-item btn btn-labeled" data-field="{{ (id)?id:'' }}"> 
+                {% if allow_add %}
+					<a class="button-add-item btn btn-labeled" data-field="{{ (id)?id:'' }}">
 						<span class="btn-label"><i class="fa fa-plus"></i></span> {% trans %}add{% endtrans %}
 					</a>
-				{% endif %}
+                {% endif %}
 			</div>
 		</div>
 		<div class="clearfix"></div>
-	{% endspaceless %}
+    {% endspaceless %}
 {% endblock collection_widget %}
 
 {% block collection_item_widget %}
-	{% spaceless %}
+    {% spaceless %}
 		<div  class="{{ entryCssClass }} sub-form-row">
-			{% set fieldNum = 1 %}
-			{% for row in prototype %}
+            {% set fieldNum = 1 %}
+            {% for row in prototype %}
 				<div class="field{{ fieldNum }}  {% if columnCssClass[fieldNum -1 ] is defined %}{{columnCssClass[fieldNum -1]}}{% endif %}">
-					{% if columnCssClass[fieldNum -1 ] is defined %}
-						{% if (true == singleFieldLabelXs) or (true == singleFieldLabel) %}
+                    {% if columnCssClass[fieldNum -1 ] is defined %}
+                        {% if (true == singleFieldLabelXs) or (true == singleFieldLabel) %}
 							<div class="sub-form-row-label {% if (false == singleFieldLabel) %} visible-xs {% endif %}">{{ form_label(row) }}</div>
-						{% endif %}
+                        {% endif %}
 						<div class="sub-form-row-label">{{ form_widget(row) }}</div>
-					{% else %}
-						{% if (false == singleFieldLabelXs) and (false == singleFieldLabel) %}
-							{{ form_widget(row) }}
-						{% else %}
-							{{ form_row(row) }}
-						{% endif %}
-					{% endif %}
-				</div>
-				{% set fieldNum = fieldNum + 1 %}
-			{% endfor %}
-			
-            {% if allow_delete %}
-                <div class="sub-form-row-actions {{ entryActionsCssClass }}">
-                    {% if  (columnCssClass|length > 0) and (true == singleFieldLabel) %}
-                        <label class="sub-form-row-label label-for-actions control-label">&nbsp;</label>
+                    {% else %}
+                        {% if (false == singleFieldLabelXs) and (false == singleFieldLabel) %}
+                            {{ form_widget(row) }}
+                        {% else %}
+                            {{ form_row(row) }}
+                        {% endif %}
                     {% endif %}
-                    <a class="remove-form-row btn btn-danger" title="{% trans %}delete{% endtrans %}">
-                        <i class="fa fa-trash-o"></i>       
-                    </a>
-                </div>
+				</div>
+                {% set fieldNum = fieldNum + 1 %}
+            {% endfor %}
+
+            {% if allow_delete %}
+				<div class="sub-form-row-actions {{ entryActionsCssClass }}">
+                    {% if  (columnCssClass|length > 0) and (true == singleFieldLabel) %}
+						<label class="sub-form-row-label label-for-actions control-label">&nbsp;</label>
+                    {% endif %}
+					<a class="remove-form-row btn btn-danger" title="{% trans %}delete{% endtrans %}">
+						<i class="fa fa-trash-o"></i>
+					</a>
+				</div>
             {% endif %}
 			<div class="clearfix"></div>
 		</div>
-	{% endspaceless %}
+    {% endspaceless %}
 {% endblock collection_item_widget %}
