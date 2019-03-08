@@ -91,10 +91,15 @@ Configuration
 -------------
 
 'column_header_label'      => true,  // lorsque les sous-formulaires sont affichés sous forme de grille, affiche les en-têtes des colones.
+
 'single_field_label'       => false, // affiche les labels individuels pour chaque champ du formulaire
+
 'single_field_label_xs'    => true, // affiche les labels individues lorsque la résolution est au niveau xs (768px en suivant la norme bootstrap )
+
 'entry_css_class'          => 'row', // Pour chaque sous-formulaire quelle classe utiliser pour le wrapper
+
 'entry_actions_css_class'  => 'form-group text-right col-xs-12', // Pour les actions sur chaque item
+
 'column_css_class'         => array(), // les classes css de chaque champ de formulaire (affichage en grille)
 
 
