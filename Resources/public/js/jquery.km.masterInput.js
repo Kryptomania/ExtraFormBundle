@@ -568,9 +568,11 @@
             // Dans ce cas, le champ a déjà une valeur
         }
         else{
-            fieldParams.item.val(oldValue);
-            debug('oldValue', oldValue, "refreshInput");
-            debug('fieldParams.item.val()', fieldParams.item.val(), "refreshInput");
+            if (fieldParams.keepOldValue){
+                fieldParams.item.val(oldValue);
+                debug('oldValue', oldValue, "refreshInput");
+                debug('fieldParams.item.val()', fieldParams.item.val(), "refreshInput");
+            }
         }
 
         $.fn.masterInput.refreshFieldTranformers(fieldParams);
@@ -661,6 +663,7 @@
         disableIfEmpty        : false,
         autoRefresh           : false,
         responseAsValue       : false,
+        keepOldValue      : true,
 
         // Pour afficher/cacher le champ
         show                  : false, // afficher ou cacher
