@@ -475,6 +475,7 @@
             show:                data.settings.show,
             refresh:             data.settings.refresh,
             autoRefresh:         data.settings.autoRefresh,
+            keepOldValue:        data.settings.keepOldValue,
             responseAsValue:     data.settings.responseAsValue,
         };
 
