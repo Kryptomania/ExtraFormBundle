@@ -15,9 +15,9 @@ class CollectionTypeExtension extends AbstractTypeExtension
      *
      * @return string The name of the type being extended
      */
-    public function getExtendedType()
+    public function getExtendedType(): iterable
     {
-        return CollectionType::class;
+        return [CollectionType::class];
     }
 
 
@@ -72,24 +72,14 @@ class CollectionTypeExtension extends AbstractTypeExtension
 
         // Columns css class
         $columnCssClass = $options['column_css_class'];
-        if (isset($attr['classes']) && is_array($attr['classes'])) {
-            @trigger_error('Using CollectionType with key \'classes\' in property \'attr\' is deprecated and will be removed in 2.0 Use \'column_css_class\' attribute instead.', E_USER_DEPRECATED);
-            $columnCssClass = $attr['classes'];
-            unset($options['attr']['classes']);
-        }
-
-        // Colums css class
+        // Action css class
         $entryActionsCssClass = $options['entry_actions_css_class'];
-        if (isset($attr['delete_class'])) {
-            @trigger_error('Using CollectionType with key \'delete_class\' in property \'attr\' is deprecated and will be removed in 2.0 Use \'entry_actions_css_class\' attribute instead.', E_USER_DEPRECATED);
-            $entryActionsCssClass = $attr['delete_class'];
-        }
 
         if (count($columnCssClass) == 0 && $options['entry_css_class'] === 'row') {
             $options['entry_css_class'] = '';
         }
 
-        // values sended to form view
+        // configuration vars send to form view
         $view->vars['entryActionsCssClass']   = $entryActionsCssClass;
         $view->vars['columnCssClass']         = $columnCssClass;
         $view->vars['collectionListCssClass'] = $options['collection_list_css_class'];

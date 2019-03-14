@@ -6,8 +6,8 @@
     "homepage": "https://github.com/Kryptomania/ExtraFormBundle",
 	"license": "MIT",
     "require": {
-        "php": "^5.5.9 || ^7.0",
-        "symfony/framework-bundle": "^2.7 || ^3.0"
+        "php": "^7.0",
+        "symfony/framework-bundle": "^4.0"
 	},
     "autoload": {
         "psr-4": { "Kryptomania\\ExtraFormBundle\\": "" }
