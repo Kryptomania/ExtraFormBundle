@@ -7,9 +7,13 @@
 	"license": "MIT",
     "require": {
         "php": "^7.0",
-        "symfony/form": "^4.0"
-	},
+        "symfony/framework-bundle": "^4.0",
+    },
     "autoload": {
         "psr-4": { "Kryptomania\\ExtraFormBundle\\": "" }
-	}
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
 }
