@@ -581,7 +581,7 @@
                 var singleOption = null;
                 $.each(fieldParams.item.children(), function(j, childOption){
                     childOption = $(childOption);
-                    if (!(typeof childOption.attr('value') != 'undefined' || childOption.attr('value'))){
+                    if ((typeof childOption.attr('value') != 'undefined' && childOption.attr('value') != '')){
                         nbOptions++;
                         singleOption = childOption;
                     }
