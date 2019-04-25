@@ -27,7 +27,12 @@
                         $this.masterInput('refresh');
                     };
 
-                    $this.on({"change": eventHandler}); 
+                    if (element.is('input, select, textarea')){
+                        $this.on({"change": eventHandler});
+                    }
+                    else{
+                        $this.on({"click": eventHandler});
+                    }
 
                     // store data
                     $this.data('masterInput', 
