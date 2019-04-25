@@ -27,7 +27,7 @@
                         $this.masterInput('refresh');
                     };
 
-                    if (element.is('input, select, textarea')){
+                    if ($this.is('input, select, textarea')){
                         $this.on({"change": eventHandler});
                     }
                     else{
@@ -473,6 +473,7 @@
             showOnValues:        data.settings.showOnValues,
             disablableField:     data.settings.disablableField,
             disableIfEmpty:      data.settings.disableIfEmpty,
+            selectSingleValue:   data.settings.selectSingleValue,
             putReadOnly:         data.settings.putReadOnly,
             hideItem:            data.settings.hideItem,
             ajaxUrl:             data.settings.ajaxUrl,
@@ -579,6 +580,23 @@
                 debug('oldValue', oldValue, "refreshInput");
                 debug('fieldParams.item.val()', fieldParams.item.val(), "refreshInput");
             }
+            if (fieldParams.selectSingleValue === true && fieldParams.item.is('select') && typeof  fieldParams.item.attr('required') !== 'undefined' && (fieldParams.item.val() === '' || fieldParams.item.val() == null)){
+                // there is no value, and the field is required so if there is just one item (placeholder excluded) I can select it
+                var nbOptions = 0;
+                var singleOption = null;
+                $.each(fieldParams.item.children(), function(j, childOption){
+                    childOption = $(childOption);
+                    if (!(typeof childOption.attr('value') !== 'undefined' || childOption.attr('value'))){
+                        nbOptions++;
+                        singleOption = childOption;
+                    }
+                });
+
+                if (nbOptions === 1){
+                    fieldParams.item.val(singleOption.attr('value'));
+                }
+
+            }
         }
 
         $.fn.masterInput.refreshFieldTranformers(fieldParams);
@@ -667,6 +685,7 @@
         sendSlaveDataName     : false,// Mets le nom de la variable qui va contenir la valeur du slave
         acceptEmptyData       : false, // la requête est-elle envoyée même s'il n'y a aucune donnée?
         disableIfEmpty        : false,
+        selectSingleValue     : true,
         autoRefresh           : false,
         responseAsValue       : false,
         keepOldValue      : true,
